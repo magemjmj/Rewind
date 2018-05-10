@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rewind", "Rewind.csproj", "{DEF186C8-73BF-E32A-8D89-19DB91AC8A19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rewind.Editor", "Rewind.Editor.csproj", "{47B8F2CB-B7DE-19A9-154B-DAD83E989160}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DEF186C8-73BF-E32A-8D89-19DB91AC8A19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEF186C8-73BF-E32A-8D89-19DB91AC8A19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEF186C8-73BF-E32A-8D89-19DB91AC8A19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEF186C8-73BF-E32A-8D89-19DB91AC8A19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47B8F2CB-B7DE-19A9-154B-DAD83E989160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47B8F2CB-B7DE-19A9-154B-DAD83E989160}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47B8F2CB-B7DE-19A9-154B-DAD83E989160}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47B8F2CB-B7DE-19A9-154B-DAD83E989160}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
