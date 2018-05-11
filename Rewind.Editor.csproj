@@ -362,6 +362,10 @@
     <Compile Include="Assets\ProCore\ProBuilder\Editor\pb_ScenePostProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Best HTTP (Pro)\BestHTTP\SecureProtocol\License.txt" />
+    <None Include="Assets\Best HTTP (Pro)\ReleaseNotes.txt" />
+    <None Include="Assets\Best HTTP (Pro)\link.xml" />
+    <None Include="Assets\Best HTTP (Pro)\link_android_subset.xml" />
     <None Include="Assets\ProCore\ProBuilder\API Examples\Icosphere FFT\README.txt" />
     <None Include="Assets\ProCore\ProBuilder\About\Font\SIL Open Font License.txt" />
     <None Include="Assets\ProCore\ProBuilder\About\ThirdPartyLicenses.txt" />
