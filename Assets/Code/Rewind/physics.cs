@@ -9,11 +9,17 @@ public class physics : MonoBehaviour {
 
     private uint? m_mismatch_frame;
 
+    private uint m_simulate_start_frame;
+    private uint m_simulate_end_frame;
+
     private void Start()
     {
         this.m_mismatch_frame = null;
 
         Physics.autoSimulation = false;
+
+        m_simulate_start_frame = 0;
+        m_simulate_end_frame = 0;
     }
 
     // Update is called once per frame
@@ -59,10 +65,10 @@ public class physics : MonoBehaviour {
         {
             uint rewind_frame = (uint)m_mismatch_frame - 1;
 
-            m_player.RewindPhyStat(rewind_frame);
-            m_remote.RewindPhyStat(rewind_frame);
+            m_player.RollBackPhyStat(rewind_frame);
+            m_remote.RollBackPhyStat(rewind_frame);
 
-            m_player.m_simulate_start_frame = rewind_frame;
+            m_simulate_start_frame = rewind_frame;
 
             m_mismatch_frame = null;
         }
@@ -70,9 +76,7 @@ public class physics : MonoBehaviour {
 
     private void Simulate()
     {
-        m_player.m_simulate_end_frame = m_player.m_input_end_frame;
-        Simulate(m_player.m_simulate_start_frame, m_player.m_simulate_end_frame);
-        m_player.m_simulate_start_frame = m_player.m_simulate_end_frame;
+        Simulate(m_simulate_start_frame, m_simulate_end_frame);
     }
 
     private void Simulate(uint start_frame, uint end_frame)

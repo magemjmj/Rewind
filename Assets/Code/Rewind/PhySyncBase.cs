@@ -15,14 +15,7 @@ public class PhySyncBase : MonoBehaviour {
 
     public uint m_input_start_frame;
     public uint m_input_process_frame;
-    public uint m_input_last_frame;
     public uint m_input_end_frame;
-
-    public uint m_send_start_frame;
-    public uint m_send_end_frame;
-
-    public uint m_simulate_start_frame;
-    public uint m_simulate_end_frame;
 
     public uint m_phy_start_frame;
     public uint m_phy_process_frame;
@@ -39,14 +32,7 @@ public class PhySyncBase : MonoBehaviour {
 
         this.m_input_start_frame = 0;
         this.m_input_process_frame = 0;
-        this.m_input_last_frame = 0;
         this.m_input_end_frame = 0;
-
-        this.m_send_start_frame = 0;
-        this.m_send_end_frame = 0;
-
-        this.m_simulate_start_frame = 0;
-        this.m_simulate_end_frame = 0;
 
         this.m_phy_start_frame = 0;
         this.m_phy_process_frame = 0;
@@ -55,26 +41,14 @@ public class PhySyncBase : MonoBehaviour {
 
     public Inputs GetInput(uint frame)
     {
-        if (frame <= m_input_last_frame)
-        {
-            return m_input_buffer[frame % MAX_BUFFER];
-        } else
-        {
-            return m_input_buffer[m_input_last_frame % MAX_BUFFER];
-        }
+        return m_input_buffer[frame % MAX_BUFFER];
     }
 
     public void SetInput(Inputs inputs)
     {
-        m_input_last_frame = inputs.frame;
         m_input_buffer[inputs.frame % MAX_BUFFER] = inputs;
     }
 
-
-    public PhyStat GetPhyStat(uint frame)
-    {
-        return m_phy_buffer[frame % MAX_BUFFER];
-    }
 
     public void SetPhyStat(uint frame)
     {
@@ -84,32 +58,29 @@ public class PhySyncBase : MonoBehaviour {
         stat.velocity = m_rigid.velocity;
         stat.angularVelocity = m_rigid.angularVelocity;
         m_phy_buffer[frame % MAX_BUFFER] = stat;
+
+        /*
+        Debug.Log("SetPhyStat : Pos " + stat.position.x + " " + stat.position.y + " " + stat.position.z);
+        Debug.Log("SetPhyStat : Rot " + stat.rotation.x + " " + stat.rotation.y + " " + stat.rotation.z + " " + stat.rotation.w);
+        Debug.Log("SetPhyStat : Vel " + stat.velocity.x + " " + stat.velocity.y + " " + stat.velocity.z);
+        Debug.Log("SetPhyStat : Ang " + stat.angularVelocity.x + " " + stat.angularVelocity.y + " " + stat.angularVelocity.z);
+        */
+
     }
 
-    public void RewindPhyStat(uint frame)
+    public void RollBackPhyStat(uint frame)
     {
         PhyStat stat = m_phy_buffer[frame % MAX_BUFFER];
         m_rigid.position = stat.position;
         m_rigid.rotation = stat.rotation;
         m_rigid.velocity = stat.velocity;
         m_rigid.angularVelocity = stat.angularVelocity;
-    }
-
-    protected void ProcessInput(Inputs inputs)
-    {
-        this.m_timer += Time.deltaTime;
-
-        this.m_input_start_frame = this.m_input_process_frame;
-        while (this.m_timer >= Time.fixedDeltaTime)
-        {
-            this.m_timer -= Time.fixedDeltaTime;
-
-            inputs.frame = this.m_input_process_frame;
-            SetInput(inputs);
-
-            this.m_input_process_frame++;
-        }
-        this.m_input_end_frame = this.m_input_process_frame;
+        /*
+        Debug.Log("BakPhyStat : Pos " + stat.position.x + " " + stat.position.y + " " + stat.position.z);
+        Debug.Log("BakPhyStat : Rot " + stat.rotation.x + " " + stat.rotation.y + " " + stat.rotation.z + " " + stat.rotation.w);
+        Debug.Log("BakPhyStat : Vel " + stat.velocity.x + " " + stat.velocity.y + " " + stat.velocity.z);
+        Debug.Log("BakPhyStat : Ang " + stat.angularVelocity.x + " " + stat.angularVelocity.y + " " + stat.angularVelocity.z);
+        */
     }
 
 

@@ -1106,9 +1106,14 @@
     <Compile Include="Assets\Best HTTP (Pro)\Examples\Websocket\WebSocketSample.cs" />
     <Compile Include="Assets\Code\Canvas\SocketIO.cs" />
     <Compile Include="Assets\Code\Manager\SocketIOManager.cs" />
+    <Compile Include="Assets\Code\Rewind\Clone\Clone.cs" />
+    <Compile Include="Assets\Code\Rewind\Clone\CloneRelay.cs" />
+    <Compile Include="Assets\Code\Rewind\Clone\CloneSocket.cs" />
+    <Compile Include="Assets\Code\Rewind\Clone_Predict\ClonePredict.cs" />
     <Compile Include="Assets\Code\Rewind\inputs.cs" />
     <Compile Include="Assets\Code\Rewind\physics.cs" />
     <Compile Include="Assets\Code\Rewind\PhySyncBase.cs" />
+    <Compile Include="Assets\Code\Rewind\PingPong\PingPong.cs" />
     <Compile Include="Assets\Code\Rewind\player.cs" />
     <Compile Include="Assets\Code\Rewind\remote.cs" />
     <Compile Include="Assets\Code\Utility\BehaviorTree.cs" />

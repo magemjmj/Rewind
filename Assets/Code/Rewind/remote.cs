@@ -7,6 +7,7 @@ public class remote : PhySyncBase
     public float move_force = 10.0f;
     public float jump_force = 100.0f;
 
+    public List<Inputs> m_send_input_buffer = new List<Inputs>();
     public List<Inputs> m_receive_input_buffer = new List<Inputs>();
 
     // Use this for initialization

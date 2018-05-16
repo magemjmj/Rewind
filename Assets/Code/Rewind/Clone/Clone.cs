@@ -2,19 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class player : PhySyncBase
+public class Clone : PhySyncBase
 {
+
+    public enum CloneMode
+    {
+        Player = 0,
+        Remote,
+    }
+
+    public CloneMode m_mode;
+
     public float move_force = 10.0f;
     public float jump_force = 100.0f;
 
     public List<Inputs> m_send_input_buffer = new List<Inputs>();
     public List<Inputs> m_receive_input_buffer = new List<Inputs>();
 
+    private Inputs m_last_inputs;
+
     private void Start()
     {
     }
 
     private void Update()
+    {
+        if (m_mode == CloneMode.Player)
+            PlayerUpdate();
+        else
+            RemoteUpdate();
+    }
+
+
+    private void PlayerUpdate()
     {
         Inputs inputs;
 
@@ -27,17 +47,41 @@ public class player : PhySyncBase
 
         this.m_timer += Time.deltaTime;
 
+        this.m_input_start_frame = this.m_input_process_frame;
+
         while (this.m_timer >= Time.fixedDeltaTime)
         {
             this.m_timer -= Time.fixedDeltaTime;
 
             inputs.frame = this.m_input_process_frame;
 
-            SendInputToServer(inputs);
-            ReceiveInputFromServer(inputs);
+            if (inputs != m_last_inputs)
+            {
+                SendInputToServer(inputs);
+                ReceiveInputFromServer(inputs);
+
+                m_last_inputs = inputs;
+            }
 
             this.m_input_process_frame++;
         }
+
+        this.m_input_end_frame = this.m_input_process_frame;
+    }
+
+    private void RemoteUpdate()
+    {
+        this.m_timer += Time.deltaTime;
+
+        this.m_input_start_frame = this.m_input_process_frame;
+
+        while (this.m_timer >= Time.fixedDeltaTime)
+        {
+            this.m_timer -= Time.fixedDeltaTime;
+            this.m_input_process_frame++;
+        }
+
+        this.m_input_end_frame = this.m_input_process_frame;
     }
 
     public void ApplyForce(Inputs inputs)
@@ -49,7 +93,7 @@ public class player : PhySyncBase
         if (inputs.right) finalforce += Vector3.right * move_force;
         if (inputs.jump) finalforce += Vector3.up * jump_force;
 
-        m_rigid.AddForce(finalforce);
+        m_rigid.AddForce(finalforce, ForceMode.Impulse);
 
     }
 
@@ -62,4 +106,6 @@ public class player : PhySyncBase
     {
         m_receive_input_buffer.Add(receive_input);
     }
+
+
 }

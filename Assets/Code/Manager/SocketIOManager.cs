@@ -5,6 +5,7 @@ using System;
 using BestHTTP;
 using BestHTTP.SocketIO;
 using BestHTTP.SocketIO.Events;
+using BestHTTP.SocketIO.Transports;
 using BestHTTP.SocketIO.JsonEncoders;
 
 
@@ -33,11 +34,11 @@ public class SocketIOManager : Singleton<SocketIOManager>
         }
     }
 
-    public void Create(string strUrl)
+    public void Create(string strUrl, TransportTypes transport = TransportTypes.Polling)
     {
         SocketOptions options = new SocketOptions();
         options.AutoConnect = false;
-		options.ConnectWith = BestHTTP.SocketIO.Transports.TransportTypes.WebSocket;
+		options.ConnectWith = transport;
 
         m_SocketManager = new SocketManager(new Uri(strUrl), options);
 		//m_SocketManager.Encoder = new JsonDotNetEncoder ();
