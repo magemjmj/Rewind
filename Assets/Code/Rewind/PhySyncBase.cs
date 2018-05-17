@@ -49,6 +49,11 @@ public class PhySyncBase : MonoBehaviour {
         m_input_buffer[inputs.frame % MAX_BUFFER] = inputs;
     }
 
+    public void SetInput(uint frame, Inputs inputs)
+    {
+        m_input_buffer[frame % MAX_BUFFER] = inputs;
+    }
+
 
     public void SetPhyStat(uint frame)
     {
@@ -68,7 +73,7 @@ public class PhySyncBase : MonoBehaviour {
 
     }
 
-    public void RollBackPhyStat(uint frame)
+    public void RestorePhyStat(uint frame)
     {
         PhyStat stat = m_phy_buffer[frame % MAX_BUFFER];
         m_rigid.position = stat.position;

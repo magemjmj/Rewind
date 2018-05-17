@@ -118,7 +118,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh17376
+  m_Name: pb_Mesh14050
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -361,7 +361,7 @@ MonoBehaviour:
   m_phy_start_frame: 0
   m_phy_process_frame: 0
   m_phy_end_frame: 0
-  m_mode: 0
+  m_mode: 1
   move_force: 0.2
   jump_force: 1.6
 --- !u!1 &933854951

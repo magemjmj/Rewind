@@ -65,7 +65,7 @@ public class ClonePredict : MonoBehaviour
         {
             Inputs receive_input = m_player.m_receive_input_buffer[0];
 
-            //Debug.Log("Receive : " + receive_input.frame + " " + receive_input.left + " " + receive_input.right + " " + receive_input.up + " " + receive_input.down + " " + receive_input.jump);
+            Debug.Log("Receive : " + receive_input.frame + " " + receive_input.left + " " + receive_input.right + " " + receive_input.up + " " + receive_input.down + " " + receive_input.jump);
 
             if (receive_input.frame < m_simulate_start_frame)
             {
@@ -98,7 +98,7 @@ public class ClonePredict : MonoBehaviour
             m_simulate_start_frame = (uint)m_mismatch_frame;
 
             Debug.Log("RollBack = " + (m_simulate_start_frame - 1));
-            m_player.RollBackPhyStat(m_simulate_start_frame - 1);
+            m_player.RestorePhyStat(m_simulate_start_frame - 1);
 
             m_mismatch_frame = null;
         }
@@ -121,8 +121,11 @@ public class ClonePredict : MonoBehaviour
             {
                 // Predict Inputs
                 inputs = m_last_inputs;
-                inputs.frame = frame;
-                m_player.SetInput(inputs);
+                Debug.Log("Predict : " +
+                    inputs.left + " " + inputs.right + " " + inputs.up + " " + inputs.down + " " + inputs.jump
+                    );
+
+                m_player.SetInput(frame, inputs);
             }
 
             m_player.ApplyForce(inputs);
@@ -130,6 +133,9 @@ public class ClonePredict : MonoBehaviour
             Physics.Simulate(Time.fixedDeltaTime);
 
             m_player.SetPhyStat(frame);
+
+            // deterministic
+            m_player.RestorePhyStat(frame);
 
             if (m_last_inputs != inputs)
             {

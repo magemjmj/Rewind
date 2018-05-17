@@ -65,8 +65,8 @@ public class physics : MonoBehaviour {
         {
             uint rewind_frame = (uint)m_mismatch_frame - 1;
 
-            m_player.RollBackPhyStat(rewind_frame);
-            m_remote.RollBackPhyStat(rewind_frame);
+            m_player.RestorePhyStat(rewind_frame);
+            m_remote.RestorePhyStat(rewind_frame);
 
             m_simulate_start_frame = rewind_frame;
 
