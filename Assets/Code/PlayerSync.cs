@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Clone : PhySyncBase
+public class PlayerSync : PhySyncBase
 {
-
-    public enum CloneMode
+    public enum ePlayerSyncType
     {
-        Player = 0,
+        Local = 0,
         Remote,
     }
 
-    public CloneMode m_mode;
+    public ePlayerSyncType m_playerSyncType;
+    public ePlayerSyncType PlayerSyncType { get { return m_playerSyncType; } }
+
+    public uint m_player_id;
+    public uint PlayerID { get { return m_player_id;  } set { m_player_id = value; } }
 
     public float move_force = 10.0f;
     public float jump_force = 100.0f;
@@ -19,7 +22,10 @@ public class Clone : PhySyncBase
     public List<Inputs> m_send_input_buffer = new List<Inputs>();
     public List<Inputs> m_receive_input_buffer = new List<Inputs>();
 
-    private Inputs m_last_inputs;
+    private Inputs m_last_send_inputs;
+
+    protected Inputs m_last_simulate_inputs;
+    public Inputs LastSimulateInput { get { return m_last_simulate_inputs; } }
 
     private void Start()
     {
@@ -27,7 +33,7 @@ public class Clone : PhySyncBase
 
     private void Update()
     {
-        if (m_mode == CloneMode.Player)
+        if (m_playerSyncType == ePlayerSyncType.Local)
             PlayerUpdate();
         else
             RemoteUpdate();
@@ -36,37 +42,35 @@ public class Clone : PhySyncBase
 
     private void PlayerUpdate()
     {
-        Inputs inputs;
+        this.m_timer += Time.deltaTime;
+        this.m_input_start_frame = this.m_input_process_frame;
 
-        inputs.frame = 0;
+        Inputs inputs;
+        inputs.frame = this.m_input_start_frame;
         inputs.up = Input.GetKey(KeyCode.W);
         inputs.down = Input.GetKey(KeyCode.S);
         inputs.left = Input.GetKey(KeyCode.A);
         inputs.right = Input.GetKey(KeyCode.D);
         inputs.jump = Input.GetKey(KeyCode.Space);
 
-        this.m_timer += Time.deltaTime;
-
-        this.m_input_start_frame = this.m_input_process_frame;
-
         while (this.m_timer >= Time.fixedDeltaTime)
         {
             this.m_timer -= Time.fixedDeltaTime;
-
-            inputs.frame = this.m_input_process_frame;
-
-            if (inputs != m_last_inputs)
-            {
-                SendInputToServer(inputs);
-                ReceiveInputFromServer(inputs);
-
-                m_last_inputs = inputs;
-            }
-
             this.m_input_process_frame++;
         }
 
         this.m_input_end_frame = this.m_input_process_frame;
+
+        if (this.m_input_start_frame != this.m_input_end_frame)
+        {
+            if (inputs != this.m_last_send_inputs)
+            {
+                SendInputToServer(inputs);
+                ReceiveInputFromServer(inputs);
+
+                this.m_last_send_inputs = inputs;
+            }
+        }
     }
 
     private void RemoteUpdate()
@@ -94,6 +98,8 @@ public class Clone : PhySyncBase
         if (inputs.jump) finalforce += Vector3.up * jump_force;
 
         m_rigid.AddForce(finalforce, ForceMode.Impulse);
+
+        m_last_simulate_inputs = inputs;
 
     }
 

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class CloneRelay : MonoBehaviour
+public class ClonePhysics : MonoBehaviour
 {
-    public Clone m_player;
+    public PlayerSync m_player;
 
     Inputs m_prev_inputs;
 
@@ -106,7 +106,7 @@ public class CloneRelay : MonoBehaviour
     {
         string logfile;
 
-        if (m_player.m_mode == Clone.CloneMode.Player)
+        if (m_player.PlayerSyncType == PlayerSync.ePlayerSyncType.Local)
             logfile = "client_log.txt";
         else
             logfile = "remote_log.txt";

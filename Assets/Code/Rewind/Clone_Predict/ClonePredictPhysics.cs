@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class ClonePredict : MonoBehaviour
+public class ClonePredictPhysics : MonoBehaviour
 {
-    public Clone m_player;
+    public PlayerSync m_player;
 
     Inputs m_last_inputs;
 
@@ -55,8 +55,8 @@ public class ClonePredict : MonoBehaviour
         }
 
 
-        m_simulate_start_frame = m_player.m_input_start_frame;
-        m_simulate_end_frame = m_player.m_input_end_frame;
+        m_simulate_start_frame = m_player.InputStartFrame;
+        m_simulate_end_frame = m_player.InputEndFrame;
 
         //Debug.Log("Plan : " + m_simulate_start_frame + " " + m_simulate_end_frame);
 
@@ -171,7 +171,7 @@ public class ClonePredict : MonoBehaviour
     {
         string logfile;
 
-        if (m_player.m_mode == Clone.CloneMode.Player)
+        if (m_player.PlayerSyncType == PlayerSync.ePlayerSyncType.Local)
             logfile = "client_log.txt";
         else
             logfile = "remote_log.txt";

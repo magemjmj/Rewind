@@ -10,11 +10,11 @@ using BestHTTP.SocketIO.Events;
 
 using StateMachine;
 
-public class CloneSocket : MonoBehaviour
+public class ManySocket : MonoBehaviour
 {
     public string m_ConnectUrl;
 
-    public PlayerSync m_player;
+    public PlayerSync[] m_players;
     public GameObject m_physics;
 
     public enum ScenarioStates
@@ -86,12 +86,18 @@ public class CloneSocket : MonoBehaviour
         byte[] arr = packet.Attachments[0];
         Inputs inputs = Inputs.FromBytes(arr);
 
-        m_player.ReceiveInputFromServer(inputs);
+        uint playerId = Convert.ToUInt32(args[0]);
+
+        m_players[playerId].ReceiveInputFromServer(inputs);
     }
 
     void GameState_Enter()
     {
-        m_player.gameObject.SetActive(true);
+        foreach (PlayerSync player in m_players)
+        {
+            player.gameObject.SetActive(true);
+        }
+
         m_physics.SetActive(true);
     }
 

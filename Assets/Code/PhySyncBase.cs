@@ -13,13 +13,16 @@ public class PhySyncBase : MonoBehaviour {
 
     protected float m_timer;
 
-    public uint m_input_start_frame;
-    public uint m_input_process_frame;
-    public uint m_input_end_frame;
+    protected uint m_input_start_frame;
+    protected uint m_input_process_frame;
+    protected uint m_input_end_frame;
 
-    public uint m_phy_start_frame;
-    public uint m_phy_process_frame;
-    public uint m_phy_end_frame;
+    protected uint m_phy_start_frame;
+    protected uint m_phy_process_frame;
+    protected uint m_phy_end_frame;
+
+    public uint InputStartFrame {  get { return m_input_start_frame;  } }
+    public uint InputEndFrame { get { return m_input_end_frame; } }
 
     private void Awake()
     {

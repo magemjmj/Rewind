@@ -14,7 +14,7 @@ public class SocketIO : MonoBehaviour
 {
     public string m_ConnectUrl;
 
-    public player m_player;
+    public PlayerSync m_player;
     public remote m_remote;
 
     public enum ScenarioStates
