@@ -48,7 +48,7 @@ public class ClonePredictPhysics : MonoBehaviour
 
             //Debug.Log("Send : " + send_input.frame + " " + send_input.left + " " + send_input.right + " " + send_input.up + " " + send_input.down + " " + send_input.jump);
 
-                byte[] arr = send_input.GetBytes();
+            byte[] arr = send_input.GetBytes();
             SocketIOManager.GetManager().Emit("sendinput", arr);
 
             m_player.m_send_input_buffer.RemoveAt(0);

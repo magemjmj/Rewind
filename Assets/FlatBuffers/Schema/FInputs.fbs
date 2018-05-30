@@ -1,0 +1,14 @@
+namespace FlatBuffers;
+
+table FInputs
+{
+	frame:uint = 0;
+	up:bool = false (bit_flags);
+	down:bool = false (bit_flags);
+	left:bool = false (bit_flags);
+	right:bool = false (bit_flags);
+	jump:bool = false (bit_flags);				
+}
+
+root_type FInputs;
+file_identifier "INPU";

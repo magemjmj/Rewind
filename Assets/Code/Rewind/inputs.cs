@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -69,14 +69,4 @@ public struct Inputs
         return inputs;
     }
 
-}
-
-
-
-public struct PhyStat
-{
-    public Vector3 position;
-    public Quaternion rotation;
-    public Vector3 velocity;
-    public Vector3 angularVelocity;
 }

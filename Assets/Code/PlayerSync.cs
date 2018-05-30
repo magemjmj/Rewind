@@ -44,8 +44,21 @@ public class PlayerSync : PhySyncBase
     {
         this.m_timer += Time.deltaTime;
         this.m_input_start_frame = this.m_input_process_frame;
+        /*
+        FlatBufferBuilder builder = new FlatBufferBuilder(1);
+        Inputs.StartInputs(builder);
+        Inputs.AddFrame(builder, this.m_input_start_frame);
+        Inputs.AddUp(builder, Input.GetKey(KeyCode.W));
+        Inputs.AddDown(builder, Input.GetKey(KeyCode.S));
+        Inputs.AddLeft(builder, Input.GetKey(KeyCode.A));
+        Inputs.AddRight(builder, Input.GetKey(KeyCode.D));
+        Inputs.AddJump(builder, Input.GetKey(KeyCode.Space));
 
-        Inputs inputs;
+        var offset = Inputs.EndInputs(builder);
+        Inputs.FinishInputsBuffer(builder, offset);
+        */
+
+        Inputs inputs = new Inputs();
         inputs.frame = this.m_input_start_frame;
         inputs.up = Input.GetKey(KeyCode.W);
         inputs.down = Input.GetKey(KeyCode.S);

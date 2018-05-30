@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class PhySyncBase : MonoBehaviour {
 
+    public struct PhyStat
+    {
+        public Vector3 position;
+        public Quaternion rotation;
+        public Vector3 velocity;
+        public Vector3 angularVelocity;
+    }
+
     public const uint MAX_BUFFER = 1024;
 
     public Inputs[] m_input_buffer = new Inputs[MAX_BUFFER];

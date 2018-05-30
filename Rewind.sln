@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio for Mac
+# Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rewind", "Rewind.csproj", "{DEF186C8-73BF-E32A-8D89-19DB91AC8A19}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rewind.Editor", "Rewind.Editor.csproj", "{47B8F2CB-B7DE-19A9-154B-DAD83E989160}"
