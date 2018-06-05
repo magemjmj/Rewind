@@ -25,7 +25,7 @@ public class PlayerSync : PhySyncBase
     private Inputs m_last_send_inputs;
 
     protected Inputs m_last_simulate_inputs;
-    public Inputs LastSimulateInput { get { return m_last_simulate_inputs; } }
+    public Inputs LastSimulateInput { get { return m_last_simulate_inputs; } set { m_last_simulate_inputs = value; } }
 
     private void Start()
     {
@@ -111,9 +111,6 @@ public class PlayerSync : PhySyncBase
         if (inputs.jump) finalforce += Vector3.up * jump_force;
 
         m_rigid.AddForce(finalforce, ForceMode.Impulse);
-
-        m_last_simulate_inputs = inputs;
-
     }
 
     protected void SendInputToServer(Inputs send_input)

@@ -45,7 +45,7 @@ public class ManyPredictPhysics : MonoBehaviour
             {
                 Inputs send_input = player.m_send_input_buffer[0];
 
-                //Debug.Log("Send : " + send_input.frame + " " + send_input.left + " " + send_input.right + " " + send_input.up + " " + send_input.down + " " + send_input.jump);
+                Debug.Log("Send : " + send_input.frame + " " + send_input.left + " " + send_input.right + " " + send_input.up + " " + send_input.down + " " + send_input.jump);
 
                 ManySocket.GetManager().SendInputs("sendinput", player.PlayerID, send_input);
 
@@ -62,8 +62,6 @@ public class ManyPredictPhysics : MonoBehaviour
 
     private void DetermineReceiveInput()
     {
-        m_mismatch_frame = null;
-        
         foreach (PlayerSync player in m_players)
         {
             while (player.m_receive_input_buffer.Count > 0)
@@ -93,6 +91,8 @@ public class ManyPredictPhysics : MonoBehaviour
 
     private void RollBack()
     {
+        if (m_simulate_start_frame >= m_simulate_end_frame) return;
+
         if (m_mismatch_frame != null)
         {
             m_simulate_start_frame = (uint)m_mismatch_frame;
@@ -101,7 +101,12 @@ public class ManyPredictPhysics : MonoBehaviour
             foreach (PlayerSync player in m_players)
             {
                 player.RestorePhyStat(m_simulate_start_frame - 1);
+
+                Inputs inputs = player.GetInput(m_simulate_start_frame - 1);
+                player.LastSimulateInput = inputs;
             }
+
+            m_mismatch_frame = null;
         }
     }
 
@@ -131,6 +136,7 @@ public class ManyPredictPhysics : MonoBehaviour
                     );
 
                 player.ApplyForce(inputs);
+                player.LastSimulateInput = inputs;
             }
             
             Physics.Simulate(Time.fixedDeltaTime);
@@ -153,7 +159,17 @@ public class ManyPredictPhysics : MonoBehaviour
     {
         string logfile;
 
-        logfile = "many_log.txt";
+        uint player_id = 0;
+
+        foreach (PlayerSync player in m_players)
+        {
+            if (player.PlayerSyncType == PlayerSync.ePlayerSyncType.Local)
+            {
+                player_id = player.PlayerID;
+            }
+        }
+
+        logfile = "log_" + player_id.ToString() + ".txt";
 
         StreamWriter sw = new StreamWriter(logfile.ToString(), true);
         sw.WriteLine(logString);

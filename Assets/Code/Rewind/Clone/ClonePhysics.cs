@@ -76,6 +76,7 @@ public class ClonePhysics : MonoBehaviour
         {
             Inputs inputs = m_player.GetInput(frame);
             m_player.ApplyForce(inputs);
+            m_player.LastSimulateInput = inputs;
             m_player.SetPhyStat(frame);
 
             m_simulate_frame_count++;

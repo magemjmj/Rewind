@@ -129,6 +129,7 @@ public class ClonePredictPhysics : MonoBehaviour
             }
 
             m_player.ApplyForce(inputs);
+            m_player.LastSimulateInput = inputs;
 
             Physics.Simulate(Time.fixedDeltaTime);
 
